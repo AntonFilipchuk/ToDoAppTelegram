@@ -5,10 +5,12 @@ using Telegram.Bot.Types;
 
 namespace Telegram.Bot.Controllers;
 
+[ApiController]
+[Route("/")]
 public class BotController : ControllerBase
 {
     [HttpPost]
-    [ValidateTelegramBot]
+    //[ValidateTelegramBot]
     public async Task<IActionResult> Post(
         [FromBody] Update update,
         [FromServices] UpdateHandlers handleUpdateService,
@@ -16,5 +18,13 @@ public class BotController : ControllerBase
     {
         await handleUpdateService.HandleUpdateAsync(update, cancellationToken);
         return Ok();
+    }
+
+    [HttpGet]
+    public string Get()
+    {
+        //Здесь мы пишем, что будет видно если зайти на адрес,
+        //указаную в ngrok и launchSettings
+        return "Telegram bot was started";
     }
 }
